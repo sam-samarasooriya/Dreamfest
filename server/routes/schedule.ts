@@ -5,9 +5,10 @@ import * as db from '../db/index.ts'
 
 const router = express.Router()
 
-// GET api/v1/schedule/:day
-//
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 //// STEP 02 - Call getEventsByDay() function into the route ////
+// GET api/v1/schedule/:day
 router.get('/:day', async (req, res, next) => {
   try {
     const day = validateDay(req.params.day)
@@ -41,5 +42,6 @@ router.get('/:day', async (req, res, next) => {
     next(e)
   }
 })
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 export default router

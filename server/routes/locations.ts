@@ -4,10 +4,10 @@ import * as db from '../db/index.ts'
 
 const router = express.Router()
 
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// GET /api/v1/locations
-//
 //// STEP 01 - Call getAllLocations() function into the route ////
+// GET /api/v1/locations
 router.get('/', async (req, res, next) => {
   try {
     // TODO: Replace this with all of the locations in the database
@@ -31,13 +31,13 @@ router.get('/', async (req, res, next) => {
     // ------ [Calling the getAllLocations() function here] -----
     const locations = await db.getAllLocations()
     res.json({ locations })
-  } 
-  //
-  catch (e) {
+  } catch (e) {
+    //
     next(e)
   }
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 //// STEP 03 - Call getLocationById() function into the route ////
 router.get('/:id', async (req, res, next) => {
@@ -51,14 +51,14 @@ router.get('/:id', async (req, res, next) => {
     //     'Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip.',
     //}
     const location = await db.getLocationById(Number(id)) // The id shows as type string, hence changing it to Number
-    res.json({location})
-  } 
-  //
-  catch (e) {
+    res.json({ location })
+  } catch (e) {
+    //
     next(e)
   }
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 //// STEP 04 - Call updateLocations() function into the route ////
 router.patch('/:id', async (req, res, next) => {
@@ -66,13 +66,14 @@ router.patch('/:id', async (req, res, next) => {
     const id = Number(req.params.id)
     const { name, description } = req.body
     // TODO: call db.updateLocation with these details
-    await db.updateLocation(id,name,description)
+    await db.updateLocation(id, name, description)
     res.sendStatus(204)
-  } 
-  //
-  catch (e) {
+  } catch (e) {
+    //
     next(e)
   }
 })
 
 export default router
+
+////////////////////////////////////////////////////////////////////////////////////////////////

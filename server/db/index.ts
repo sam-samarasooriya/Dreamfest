@@ -9,9 +9,11 @@ const environment = (process.env.NODE_ENV || 'development') as Environment
 const config = knexFile[environment]
 export const connection = knex(config)
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 01 - Show all locations ---- ////
 // TODO: replace this with your knex query//
-export async function getAllLocations(): Promise<LocationData[] | undefined> {
+export async function getAllLocations(): Promise<LocationData[]> {
   const locations = await connection('locations') // [connect 'locations' table]
     .select('*') // Select all data in locations table //
   //.where () Not required as we need all data in locations table//
@@ -19,13 +21,12 @@ export async function getAllLocations(): Promise<LocationData[] | undefined> {
   return locations as LocationData[]
 }
 
-//
-//
-//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 02 - Show events for a day ---- ////
 export async function getEventsByDay(
   day: string,
-): Promise<EventWithLocation[] | undefined> {
+): Promise<EventWithLocation[]> {
   const events = await connection('events') // [connect 'event' table]
     .join('locations', 'events.location_id', 'locations.id')
     .select(
@@ -41,13 +42,10 @@ export async function getEventsByDay(
   return events as EventWithLocation[]
 }
 
-//
-//
-//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 03 - Show the edit form ---- ////
-export async function getLocationById(
-  id: number,
-): Promise<Location | undefined> {
+export async function getLocationById(id: number): Promise<Location> {
   const locations = await connection('locations') // [connect 'location' table]
     // .join() We do not join any other tables
     .select('id', 'name', 'description')
@@ -57,9 +55,9 @@ export async function getLocationById(
 
   return locations as Location
 }
-//
-//
-//
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 04 - Submit the form ---- ////
 //
 //NOTE - There is NO updatedLocation (object) parameter in this project. So use id,name,description instead //
@@ -74,22 +72,20 @@ export async function updateLocation(
     //.select() We do not use .select as we update details form the form //
     .where('locations.id', id)
     //.first() not required
-    .update({ name, description })// require {} insiide () as they are objects with key value pairs
+    .update({ name, description }) // require {} insiide () as they are objects with key value pairs
 
+  //NOTE - .update() method from Knex does not return the updated row, Hence can not add return statemrent(return locations)
+  //NOTE - Hence, use console.log(locations) below to Avoid red line in 72.
   console.log(locations)
 }
-//
-//
-//
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 05 - Add a new event ---- ////
-export async function addNewEvent(event:EventData) // Use EventData Interface as it match "Add New Event Form" in server/browser 
- {
-
-
-
-  
+export async function addNewEvent(event: EventData) {
+  // Use EventData Interface as it match "Add New Event Form" in server/browser
 }
-//
-//
-//
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////// ---- STEP 06 - Delete events ---- ////

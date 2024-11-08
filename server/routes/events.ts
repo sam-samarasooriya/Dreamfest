@@ -7,11 +7,18 @@ import * as db from '../db/index.ts'
 const router = express.Router()
 export default router
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////// STEP 05 - Call addNewEvent() function into the route ////
+
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, time, location_id} = req.body
+    // STEP 05 - SubStep 1 - Change property of body object in below
+    const { name, description, time, location_id } = req.body // Changed location.id to location_id
     const day = validateDay(req.body.day)
+    //
     const id = 0 // TODO: call your new db.addNewEvent function and use the returned ID
+    //
     const url = `/api/v1/events/${id}`
     res.setHeader('Location', url)
     res.status(201).json({ location: url })
@@ -19,6 +26,8 @@ router.post('/', async (req, res, next) => {
     next(e)
   }
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.delete('/:id', async (req, res, next) => {
   try {
@@ -29,6 +38,8 @@ router.delete('/:id', async (req, res, next) => {
     next(e)
   }
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -51,6 +62,8 @@ router.get('/:id', async (req, res, next) => {
     next(e)
   }
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.patch('/:id', async (req, res, next) => {
   try {

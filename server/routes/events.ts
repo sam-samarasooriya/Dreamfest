@@ -13,11 +13,17 @@ export default router
 
 router.post('/', async (req, res, next) => {
   try {
-    // STEP 05 - SubStep 1 - Change property of body object in below
-    const { name, description, time, location_id } = req.body // Changed location.id to location_id
+    const { name, description, time, locationId } = req.body
     const day = validateDay(req.body.day)
     //
-    const id = 0 // TODO: call your new db.addNewEvent function and use the returned ID
+    // TODO: call your new db.addNewEvent function below and use the returned ID
+    const id = await db.addNewEvent({
+      name,
+      description,
+      time,
+      locationId,
+      day,
+    })
     //
     const url = `/api/v1/events/${id}`
     res.setHeader('Location', url)
@@ -29,10 +35,13 @@ router.post('/', async (req, res, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////// STEP 06 - Call deleteEvent(id) function into the route ////
 router.delete('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
-    // TODO: DELETE the event with this matching ID
+    // TODO: Below is DELETE the event function with this matching ID
+    db.deleteEvent(id)
+    //
     res.sendStatus(204)
   } catch (e) {
     next(e)

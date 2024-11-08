@@ -84,8 +84,25 @@ export async function updateLocation(
 //////// ---- STEP 05 - Add a new event ---- ////
 export async function addNewEvent(event: EventData) {
   // Use EventData Interface as it match "Add New Event Form" in server/browser
+  const newData = await connection('events').insert({
+    location_id: event.locationId, // Check ReadMe [location_Id & locationId]
+    day: event.day,
+    time: event.time,
+    name: event.name,
+    description: event.description,
+  })
+  console.log(newData)
+  return newData
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////// ---- STEP 06 - Delete events ---- ////
+export async function deleteEvent(id: number) {
+  // ReadMe file says to take id as a parameter //
+  const deleteData = await connection('events')
+    .where('events.id', id)
+    .delete('*') // This will delete entire data, "*" represent all
+  console.log(deleteData)
+  return deleteData
+}

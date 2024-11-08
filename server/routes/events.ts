@@ -9,7 +9,7 @@ export default router
 
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, time, locationId } = req.body
+    const { name, description, time, location_id} = req.body
     const day = validateDay(req.body.day)
     const id = 0 // TODO: call your new db.addNewEvent function and use the returned ID
     const url = `/api/v1/events/${id}`

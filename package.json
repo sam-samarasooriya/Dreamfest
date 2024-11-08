@@ -5,6 +5,7 @@
   "description": "NZ's premier culture festival",
   "main": "index.js",
   "scripts": {
+    "index": "ts-node server/db/index.ts",
     "start": "node dist/server.js",
     "dev": "run-p dev:client dev:server",
     "dev:client": "vite",
@@ -64,7 +65,9 @@
     "react-router-dom": "^6.11.2",
     "superagent": "^8.1.2",
     "supertest": "^6.3.4",
+    "ts-node": "^10.9.2",
     "tsx": "^3.12.7",
+    "typescript": "^5.6.3",
     "vite": "^5.0.0",
     "vitest": "^1.2.0"
   },

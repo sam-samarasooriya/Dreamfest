@@ -1,8 +1,11 @@
+///////////////// ASSESSMENT STEP -  CLIENT SIDE / FRONT END TESTING //////////////////////////
+
 // @vitest-environment jsdom
 import { describe, it, expect, beforeAll } from 'vitest'
+import { setupApp } from './setup.tsx'
 import nock from 'nock'
 
-import { setupApp } from './setup.tsx'
+
 
 beforeAll(() => {
   nock.disableNetConnect()
@@ -49,12 +52,16 @@ describe('Deleting an event', () => {
     expect(nameInput).toHaveValue('Slushie Apocalypse I')
     expect(descriptionInput).toBeInTheDocument()
     expect(descriptionInput).toHaveValue(
-      'This event will be taking place at the TangleStage. Be sure to not miss the free slushies cause they are rad!',
+'This event will be taking place at the TangleStage. Be sure to not miss the free slushies cause they are rad!',
     )
 
     expect(eventScope.isDone()).toBe(true)
     expect(locationScope.isDone()).toBe(true)
   })
+
+  /////////////////////   WRITE THE TEST HERE   /////////////////////
+
+  /// ARANGE -> ACT -> ASSERT ///
 
   it.todo('deletes the event when the delete button is clicked', async () => {
     // TODO: write client integration test for event delete

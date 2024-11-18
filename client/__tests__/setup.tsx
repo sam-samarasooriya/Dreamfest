@@ -1,11 +1,10 @@
 import { beforeEach, expect } from 'vitest'
 import { cleanup, render } from '@testing-library/react/pure'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 import * as matchers from '@testing-library/jest-dom/matchers'
 import '@testing-library/jest-dom/vitest'
-
 import routes from '../routes.tsx'
-import { RouterProvider, createMemoryRouter } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import userEvent from '@testing-library/user-event'
 
 beforeEach(cleanup)
@@ -33,5 +32,5 @@ export function setupApp(route = '/') {
   )
 
   const user = userEvent.setup()
-  return { user, ...screen }
+  return { ...screen, user }
 }

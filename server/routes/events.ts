@@ -40,6 +40,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
     // TODO: Below is DELETE the event function with this matching ID
+
     const delResult = await db.deleteEvent(id)
     //
     if (delResult) {

@@ -106,3 +106,23 @@ export async function deleteEvent(id: number) {
   console.log(deleteData)
   return deleteData
 }
+
+// export async function deleteEvent(id: number) {
+//   try {
+//     const result = await connection('events').where('id', id).del()
+//     if (result === 0) {
+//       throw new Error('No event found with the given ID')
+//     }
+//   } catch (error) {
+//     console.error('Error deleting event:', error)
+//     throw error
+//   }
+// }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////// ---- STEP 07 - Create getEventId for backend test ---- ////
+export const getEventById = async (id: number) => {
+  const response = await connection('events').where('id', id).first()
+  return response
+}

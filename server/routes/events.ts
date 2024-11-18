@@ -40,9 +40,13 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
     // TODO: Below is DELETE the event function with this matching ID
-    db.deleteEvent(id)
+    const delResult = await db.deleteEvent(id)
     //
-    res.sendStatus(204)
+    if (delResult) {
+      res.sendStatus(204)
+    } else {
+      res.sendStatus(404)
+    }
   } catch (e) {
     next(e)
   }
@@ -50,21 +54,41 @@ router.delete('/:id', async (req, res, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+///// STEP 07 - Use of getEventId for backend test ////
+
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const id = Number(req.params.id)
+//     // TODO: Replace event below with the event from the database using its id
+//     // NOTE: It should have the same shape as this one
+//     const event = {
+//       id: id,
+//       locationId: 1,
+//       day: 'friday',
+//       time: '2pm - 3pm',
+//       name: 'Slushie Apocalypse I',
+//       description:
+//         'This is totally a description of this really awesome event that will be taking place during this festival at the Yella Yurt. Be sure to not miss the free slushies cause they are rad!',
+//     }
+//     // TODO: if there's no event with that id, respond with a 404 instead
+
+//     res.json(event)
+//   } catch (e) {
+//     next(e)
+//   }
+// })
+
 router.get('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
-    // TODO: Replace event below with the event from the database using its id
-    // NOTE: It should have the same shape as this one
-    const event = {
-      id: id,
-      locationId: 1,
-      day: 'friday',
-      time: '2pm - 3pm',
-      name: 'Slushie Apocalypse I',
-      description:
-        'This is totally a description of this really awesome event that will be taking place during this festival at the Yella Yurt. Be sure to not miss the free slushies cause they are rad!',
+
+    //event from the database using its id
+    const event = await db.getEventById(id)
+
+    //if there's no event with that id, respond with a 404 instead
+    if (!event) {
+      return res.status(404).json({ error: 'Sorry, Event does not exsist' })
     }
-    // TODO: if there's no event with that id, respond with a 404 instead
 
     res.json(event)
   } catch (e) {
@@ -74,17 +98,17 @@ router.get('/:id', async (req, res, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const { name, description, time } = req.body
-    const id = Number(req.body.id)
-    const day = validateDay(req.body.day)
-    const locationId = Number(req.body.locationId)
+// router.patch('/:id', async (req, res, next) => {
+//   try {
+//     const { name, description, time } = req.body
+//     const id = Number(req.body.id)
+//     const day = validateDay(req.body.day)
+//     const locationId = Number(req.body.locationId)
 
-    // TODO: UPDATE the event in the db with the matching ID using these details,
-    // if no event has a matching id, respond with a 404 instead
-    res.sendStatus(204)
-  } catch (e) {
-    next(e)
-  }
-})
+// TODO: UPDATE the event in the db with the matching ID using these details,
+// if no event has a matching id, respond with a 404 instead
+//     res.sendStatus(204)
+//   } catch (e) {
+//     next(e)
+//   }
+// })
